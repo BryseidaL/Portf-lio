@@ -1,0 +1,745 @@
+
+/* Importa a fonte 'Montserrat' do Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+/* Reseta margens, paddings e define o box-sizing */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Configurações globais para o HTML */
+html {
+  font-size: 10px; /* 1rem = 10px para facilitar o cálculo */
+  font-family: "Montserrat", sans-serif;
+  scroll-behavior: smooth; /* Rolagem suave para navegação interna */
+}
+
+/* Estilo para links: remove o sublinhado */
+a {
+  text-decoration: none;
+}
+
+/* Classe genérica para um contêiner centralizado */
+.container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Estilo para imagens: preenchem o contêiner sem distorção */
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Estilo padrão para parágrafos */
+p {
+  color: black;
+  font-size: 1.4rem;
+  margin-top: 5px;
+  line-height: 2.5rem;
+  font-weight: 300;
+  letter-spacing: 0.05rem;
+}
+
+/* ========================================= */
+/* 🎨 Componentes Reutilizáveis              */
+/* ========================================= */
+
+/* Estilo para títulos de seção */
+.section-title {
+  font-size: 4rem;
+  font-weight: 300;
+  color: black;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  text-align: center;
+}
+.section-title span {
+  color: crimson; /* Destaque na cor para a parte do span */
+}
+
+/* Estilo para o botão de "chamada para ação" (CTA) */
+.cta {
+  display: inline-block;
+  padding: 10px 30px;
+  background-color: transparent;
+  border: 2px solid crimson;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  margin-top: 30px;
+  transition: 0.3s ease background-color, color;
+  color: white;
+}
+.cta:hover {
+  color: white;
+  background-color: crimson;
+}
+
+/* Estilo para a marca/nome no cabeçalho */
+.brand h1 {
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  color: white;
+  margin-left: 20px;
+}
+.brand h1 span {
+  color: crimson;
+  font-size: 35px;
+  font-family: "Montserrat", sans-serif;
+}
+/* ========================================= */
+/* navigarion */
+/* ========================================= */
+
+/* Cabeçalho fixo no topo da página */
+#header {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: auto;
+}
+
+/* Efeito de vidro borrado para o fundo do cabeçalho */
+#header .header {
+  min-height: 8vh;
+  transition: 0.3s ease background-color;
+  background: rgba(255, 255, 255, 0.15); /* Increased opacity for better visibility */
+  box-shadow: 0 8px 32px 0 rgba(78, 8, 8, 0.37);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Estilo da barra de navegação */
+#header .nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  max-width: 1300px;
+  padding: 0 10px;
+}
+
+/* Estilo do ícone de hambúrguer (mobile) */
+#header .hamburger {
+  border: 3px solid white;
+  height: 60px;
+  width: 60px;
+  display: inline-flex;
+  border-radius: 50%;
+  margin-right: 20px;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  cursor: pointer;
+  transform: scale(0.8);
+}
+
+/* Animação de pulso para o hambúrguer */
+#header .hamburger:after {
+  content: "";
+  border: 3px solid white;
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  position: absolute;
+  animation: hamburger-puls 1s ease infinite;
+}
+
+/* Estilo das barras do ícone de hambúrguer */
+#header .hamburger .bar {
+  background-color: white;
+  height: 2px;
+  width: 30px;
+  position: relative;
+  z-index: -1;
+}
+#header .hamburger .bar::before,
+#header .hamburger .bar::after {
+  content: "";
+  background-color: white;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  transition: 0.3s ease top, bottom;
+}
+#header .hamburger .bar::after {
+  top: 8px;
+}
+#header .hamburger .bar::before {
+  bottom: 8px;
+}
+
+/* Transforma o ícone de hambúrguer em "X" quando ativo */
+#header .hamburger.active .bar::before {
+  bottom: 0;
+}
+#header .hamburger.active .bar::after {
+  top: 0;
+}
+
+/* Estilo da lista de navegação (menu) em telas mobile */
+#header .nav-list ul {
+  list-style-type: none;
+  background-color: rgb(31, 30, 30);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  left: 100%; /* Inicia fora da tela */
+  top: 0;
+  z-index: 1;
+  overflow-x: hidden;
+  padding-right: 10px;
+  transition: 0.3s ease left;
+}
+
+/* Mostra a lista de navegação quando a classe 'active' é adicionada */
+#header .nav-list ul.active {
+  left: 0;
+}
+
+/* Estilo dos links do menu */
+#header .nav-list ul a {
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.2rem;
+  text-decoration: none;
+  color: white;
+  text-transform: uppercase;
+  display: block;
+  padding: 20px 10px;
+  transition: 0.5s ease left;
+}
+
+/* Efeito de texto "fantasma" que aparece atrás dos links ao passar o mouse */
+#header .nav-list ul a::after {
+  content: attr(data-after);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  color: rgba(240, 248, 255, 0.021);
+  font-size: 13rem;
+  letter-spacing: 50px;
+  z-index: -1;
+  transition: 0.3s ease letter-spacing;
+}
+
+/* Animação do texto "fantasma" no hover */
+#header .nav-list ul li:hover a::after {
+  transform: translate(-50%, -50%) scale(1);
+  letter-spacing: initial;
+}
+
+/* Transição de cor para os links */
+#header .nav-list ul li a {
+  transition: color 0.3s ease;
+}
+
+/* Muda a cor do link ao passar o mouse */
+#header .nav-list ul li:hover a {
+  color: crimson;
+}
+
+/*
+  =========================================
+  🖥️ Media Queries: Telas grandes (Desktop)
+  =========================================
+*/
+@media screen and (min-width: 1200px) {
+  /* Esconde o hambúrguer em telas grandes */
+  #header .hamburger {
+    display: none;
+  }
+  /* Mostra a lista de navegação na horizontal */
+  #header .nav-list ul {
+    position: initial;
+    display: block;
+    height: auto;
+    width: fit-content;
+    background-color: transparent;
+  }
+  #header .nav-list ul li {
+    display: inline-block;
+  }
+  #header .nav-list ul a {
+    font-size: 1.8rem;
+  }
+  /* Remove o efeito "fantasma" em telas grandes */
+  #header .nav-list ul a::after {
+    display: none;
+  }
+}
+/* ========================================= */
+/* 🚀 Animações */
+/* ========================================= */
+
+/* Animação de pulso do hambúrguer */
+@keyframes hamburger-puls {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.4);
+  }
+}
+
+/* Animação para a revelação dos títulos */
+@keyframes text-reveal {
+  100% {
+    color: white;
+  }
+}
+
+/* Animação para a cor do nome em destaque */
+@keyframes text-reveal-name {
+  100% {
+    color: crimson;
+    font-weight: 500;
+  }
+}
+
+/* Animação da caixa que revela o texto */
+@keyframes text-reveal-box {
+  50% {
+    width: 100%;
+    left: 0;
+  }
+  100% {
+    width: 0;
+    left: 100%;
+  }
+}
+
+/* ========================================= */
+/* 🏠 Seção Principal (Hero) */
+/* ========================================= */
+
+/* Fundo e sobreposição da seção Hero */
+#hero {
+  background-image: url(./assets/images/hero-bg.jpg);
+  background-size: cover;
+  background-position: top center;
+  position: relative;
+  z-index: 1;
+}
+#hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  opacity: 0.7;
+  z-index: -1;
+}
+
+/* Contêiner interno da seção Hero */
+#hero .hero {
+  max-width: 1200px;
+  justify-content: flex-start;
+  margin: 0 auto;
+  padding: 0 50px;
+}
+
+/* Animação de entrada dos títulos */
+#hero h1 {
+  display: block;
+  width: fit-content;
+  font-size: 4rem;
+  position: relative;
+  color: transparent;
+  animation: text-reveal 1s ease forwards;
+  animation-delay: 1s;
+}
+
+/* Atrasos para a animação sequencial dos títulos */
+#hero h1:nth-child(1) {
+  animation-delay: 1s;
+}
+#hero h1:nth-child(2) {
+  animation-delay: 2s;
+}
+#hero h1:nth-child(3) {
+  animation: text-reveal-name 0.5s ease 1.5s forwards;
+  animation-delay: 3s;
+}
+
+/* Atrasos para a animação da caixa de revelação */
+#hero h1 span {
+  background-color: crimson;
+  height: 100%;
+  width: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: text-reveal-box 1s ease;
+  animation-delay: 0.5s;
+}
+#hero h1:nth-child(1) span {
+  animation-delay: 0.5s;
+}
+#hero h1:nth-child(2) span {
+  animation-delay: 1.5s;
+}
+#hero h1:nth-child(3) span {
+  animation-delay: 2.5s;
+}
+
+/* ========================================= */
+/* 🖥️ Media Queries: Telas médias (Tablet)  */
+/* ========================================= */
+
+@media only screen and (min-width: 768px) {
+  /* Ajustes para botões e títulos */
+  .cta {
+    font-size: 2.5rem;
+    padding: 20px 60px;
+  }
+  h1.section-title {
+    font-size: 6rem;
+    font-weight: 270;
+  }
+  #hero h1 {
+    font-size: 7rem;
+    font-weight: 400;
+  }
+}
+/* ========================================= */
+/* 🧱 Seção de Projetos */
+/* ========================================= */
+
+/* Estilo do contêiner da seção de projetos */
+#projects .projects {
+  flex-direction: column;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 100px 0;
+}
+
+/* Título e contêiner dos projetos */
+#projects .projects-header h1 {
+  margin-bottom: 50px;
+}
+#projects .all-projects {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/* Estilo individual para cada item de projeto */
+#projects .project-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 80%;
+  margin: 20px auto;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+/* Estilo para a área de informação do projeto */
+#projects .project-info {
+  padding: 30px;
+  flex-basis: 50%;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);
+  color: white;
+}
+#projects .project-info h1 {
+  font-size: 4rem;
+  font-weight: 500;
+}
+#projects .project-info h2 {
+  font-size: 1.8rem;
+  font-weight: 500;
+  margin-top: 10px;
+}
+#projects .project-info p {
+  color: white;
+}
+
+/* Estilo para a área de imagem do projeto */
+#projects .project-img {
+  flex-basis: 50%;
+  height: 300px;
+  overflow: hidden;
+  position: relative;
+}
+#projects .project-img:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);
+  opacity: 0.3;
+}
+#projects .project-img img {
+  transition: 0.3s ease transform;
+}
+#projects .project-item:hover .project-img img {
+  transform: scale(1.1); /* Efeito de zoom no hover */
+}
+
+/* Media query para projetos em telas maiores */
+@media only screen and (min-width: 768px) {
+  #projects .project-item {
+    flex-direction: row;
+  }
+  #projects .project-item:nth-child(even) {
+    flex-direction: row-reverse; /* Alterna a direção para cada projeto */
+  }
+  #projects .project-item {
+    height: 400px;
+    margin: 0;
+    width: 100%;
+    border-radius: 0;
+  }
+  #projects .all-projects .project-info {
+    height: 100%;
+  }
+  #projects .all-projects .project-img {
+    height: 100%;
+  }
+}
+
+/* ========================================= */
+/* ✍️ Seção Sobre (About) */
+/* ========================================= */
+
+/* Estilo do contêiner da seção sobre, com ordem invertida para mobile */
+#about .about {
+  flex-direction: column-reverse;
+  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 100px 20px;
+}
+
+/* Estilo das colunas (imagem e texto) */
+#about .col-left {
+  width: 250px;
+  height: 360px;
+}
+#about .col-right {
+  width: 100%;
+}
+#about .col-right h2 {
+  font-size: 1.8rem;
+  font-weight: 500;
+  letter-spacing: 0.2rem;
+  margin-bottom: 10px;
+}
+#about .col-right p {
+  margin-bottom: 20px;
+}
+#about .col-right .cta {
+  margin-bottom: 50px;
+  color: black;
+  padding: 10px 20px;
+  font-size: 2rem;
+}
+
+/* Estilo da imagem de perfil e sua borda dupla */
+#about .col-left .about-img {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  border: 10px solid white;
+}
+#about .col-left .about-img::after {
+  content: "";
+  position: absolute;
+  left: -33px;
+  top: 19px;
+  height: 98%;
+  width: 98%;
+  border: 7px solid crimson;
+  z-index: -1;
+}
+
+/* Media query para a seção Sobre em telas maiores */
+@media screen and (min-width: 768px) {
+  #about .about {
+    flex-direction: row; /* Coloca as colunas lado a lado */
+  }
+  #about .col-left {
+    width: 600px;
+    height: 400px;
+    padding-left: 60px;
+  }
+  #about .col-left .about-img::after {
+    left: -45px;
+    top: 34px;
+    height: 98%;
+    width: 98%;
+    border: 10px solid crimson;
+  }
+  #about .col-right {
+    text-align: left;
+    padding: 30px;
+  }
+  #about .col-right h1 {
+    text-align: left;
+  }
+}
+/* ========================================= */
+/* 📞 Seção de Contato */
+/* ========================================= */
+
+/* Estilo do contêiner da seção de contato */
+#contact .contact {
+  flex-direction: column;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 90%;
+}
+#contact .contact-items {
+  width: 100%;
+}
+
+/* Estilo individual para cada item de contato */
+#contact .contact-item {
+  width: 80%;
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+  padding: 30px;
+  margin: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 0px 0px 18px 0 #0000002c;
+  transition: 0.3s ease box-shadow;
+  cursor: pointer;
+}
+#contact .contact-item:hover {
+  box-shadow: 0px 0px 5px 0 #0000002c;
+}
+
+/* Estilo do ícone e das informações de contato */
+#contact .icon {
+  width: 70px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+#contact .contact-info h1 {
+  font-size: 2.5rem;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+#contact .contact-info h2 {
+  font-size: 1.3rem;
+  line-height: 2rem;
+  font-weight: 500;
+}
+
+/* Media query para contato em telas maiores */
+@media only screen and (min-width: 768px) {
+  #contact .contact {
+    flex-direction: column;
+    padding: 100px 0;
+    align-items: center;
+    justify-content: center;
+    min-width: 20vh;
+  }
+  #contact .contact-items {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin: 0;
+  }
+  #contact .contact-item {
+    width: 30%;
+    margin: 0;
+    flex-direction: row;
+  }
+  #contact .contact-item .icon {
+    height: 100px;
+    width: 100px;
+  }
+  #contact .contact-item .icon img {
+    object-fit: contain;
+  }
+  #contact .contact-item .contact-info {
+    width: 100%;
+    text-align: left;
+    padding-left: 20px;
+  }
+}
+
+/* ========================================= */
+/* ⚙️ Rodapé (Footer) */
+/* ========================================= */
+
+/* Estilo do fundo do rodapé */
+#footer {
+  background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);
+}
+
+/* Estilo do contêiner do rodapé */
+#footer .footer {
+  min-height: 200px;
+  flex-direction: column;
+  padding-top: 50px;
+  padding-bottom: 10px;
+}
+#footer h2 {
+  color: white;
+  font-weight: 500;
+  font-size: 1.8rem;
+  letter-spacing: 0.1rem;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/* Estilo para os ícones sociais */
+#footer .social-icon {
+  display: flex;
+  margin-bottom: 30px;
+}
+#footer .social-item {
+  height: 50px;
+  width: 50px;
+  margin: 0 5px;
+}
+#footer .social-item img {
+  filter: grayscale(1);
+  transition: 0.3s ease filter;
+}
+#footer .social-item:hover img {
+  filter: grayscale(0); /* Remove o efeito de cinza no hover */
+}
+#footer p {
+  color: white;
+  font-size: 1.3rem;
+}
